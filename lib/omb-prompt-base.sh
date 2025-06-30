@@ -186,6 +186,10 @@ function git_clean_branch {
   local stripped_ref=${unsafe_ref##refs/heads/}
   local clean_ref=${stripped_ref//[\$\`\\]/-}
   clean_ref=${clean_ref//[^[:print:]]/-} # strip escape sequences, etc.
+  if [[ ${#clean_ref} -gt 20 ]]; then
+    # if the branch name is too long, truncate it
+    clean_ref=${clean_ref:0:20}…
+  fi
   _omb_util_print $clean_ref
 }
 
